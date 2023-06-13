@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import { GlobalStateType } from './index'
 
 export interface ProductStateType {
-    cart: ProductType[]
+    cart: CartType
 }
 
 export interface ProductType {
@@ -31,22 +31,26 @@ export interface MasterType {
     store: StoreType
 }
 
-const sampleCart: ProductType[] = [
-  {
-            "id": 1,
-            "name": "Round steak",
-            "brand": "Meat Master",
-            "vector": "v735165"
-    }
-]
+export interface CartType {
+    [x: string]: ProductType
+}
 
-const productSlice = createSlice<ProductStateType, any, any>({
+const sampleCart: CartType = {
+    '1': {
+        "id": 1,
+        "name": "Round steak",
+        "brand": "Meat Master",
+        "vector": "v735165"
+    }
+}
+
+const productSlice = createSlice({
     name: 'product',
     initialState: {
-        cart: sampleCart
+        cart: {}
     },
     reducers: {
-        setCart(state: ProductStateType, { payload }: { payload: ProductType[] }) {
+        setCart(state: ProductStateType, { payload }: { payload: CartType }) {
             state.cart = payload
         },
     }
