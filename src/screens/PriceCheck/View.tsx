@@ -4,32 +4,22 @@ import SafeContainer from '../../compenents/SafeContainer'
 import styled from 'styled-components/native'
 import { ScrollView, View } from 'react-native'
 import { CartType, ProductType } from '../../redux/productSlice'
-import { NavigationProp } from '@react-navigation/native'
 
 interface PropTypes {
-    cart: CartType
-    deleteFromCart: (product: ProductType) => void
-    handleQuantityChange: (vector: string, unit_factor: string) => void
-    navigation: NavigationProp<ReactNavigation.RootParamList>
+   
 }
 
 const Container = styled.View`
     height: 100%;
-`
-const FlexView = styled.View`
-    flexDirection: row;
-    flex: 1;
-    justifyContent: flex-end;
-    alignItems: center;
 `
 
 export default (props: PropTypes) => {
     return (
         <SafeContainer>
             <Container>
-                <FAB 
+                {/* <FAB 
                     icon='check'
-                    onPress={()=>{props.navigation.navigate('price_check')}}
+                    onPress={()=>{console.log('press')}}
                     style={{ position: 'absolute', margin: 16, right: 0, bottom: 0 }}
                 />
                 <List.Section>
@@ -56,7 +46,7 @@ export default (props: PropTypes) => {
                             ))
                         }
                     </ScrollView>
-                </List.Section>
+                </List.Section> */}
             </Container>
         </SafeContainer>
     )

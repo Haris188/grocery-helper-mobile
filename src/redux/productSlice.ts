@@ -9,7 +9,9 @@ export interface ProductType {
     id: Number
     name: String
     brand: String
-    vector: String
+    vector: String,
+    unit?: String
+    unit_factor?: Number
 }
 
 export interface StoreType {
@@ -53,11 +55,17 @@ const productSlice = createSlice({
         setCart(state: ProductStateType, { payload }: { payload: CartType }) {
             state.cart = payload
         },
+        deleteFromCart(state: ProductStateType, { payload }: { payload: ProductType }) {
+            const tempCart = { ...state.cart }
+            delete tempCart[payload.vector.toString()]
+            state.cart = tempCart
+        },
     }
 })
 
 export const {
-    setCart
+    setCart,
+    deleteFromCart
 } = productSlice.actions
 
 export const cartSelector = (state: GlobalStateType) => state.product.cart

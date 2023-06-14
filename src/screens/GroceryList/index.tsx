@@ -1,7 +1,12 @@
 import React, {useState} from 'react'
 import View, { PropTypes } from './View'
 import { useSelector, useDispatch } from 'react-redux'
-import { ProductType, cartSelector, setCart } from '../../redux/productSlice'
+import { 
+    ProductType, 
+    cartSelector, 
+    setCart,
+    deleteFromCart
+ } from '../../redux/productSlice'
 import { serverRequest } from '../../lib/utils'
 import { useNavigation } from '@react-navigation/native'
 
@@ -28,10 +33,8 @@ export default () => {
         dispatch(setCart(tempCart))
     }
 
-    const deleteFromCart = (product: ProductType)=>{
-        const tempCart = {...cart}
-        delete tempCart[product.vector.toString()]
-        dispatch(setCart(tempCart))
+    const deleteProductFromCart = (product: ProductType)=>{
+        dispatch(deleteFromCart(product))
     }
 
     console.log(searchList.length)
@@ -40,7 +43,7 @@ export default () => {
         handleSearchChange={handleSearchChange}
         searchList={searchList}
         addToCart={addToCart}
-        deleteFromCart={deleteFromCart}
+        deleteFromCart={deleteProductFromCart}
         cart={cart}
         navigation={navigation}
     />

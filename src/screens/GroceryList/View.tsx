@@ -5,6 +5,7 @@ import SafeContainer from '../../compenents/SafeContainer'
 import { ScrollView } from 'react-native'
 import { CartType, ProductType } from '../../redux/productSlice'
 import { NavigationProp } from '@react-navigation/native'
+import FabButton from '../../compenents/FabButton'
 
 export interface PropTypes {
     handleSearchChange: (text: String) => void
@@ -17,14 +18,6 @@ export interface PropTypes {
 
 const Container = styled.View`
     height: 100%;
-`
-const FabButton = styled(Button)`
-    position: absolute;
-    margin: 16px;
-    right:0;
-    bottom: 0;
-    padding: 3px;
-    z-index: 2
 `
 
 export default (props: PropTypes) => {
