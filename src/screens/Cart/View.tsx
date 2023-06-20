@@ -27,11 +27,11 @@ export default (props: PropTypes) => {
     return (
         <SafeContainer>
             <Container>
-                <FAB 
+                {Object.keys(props.cart).length > 0 && <FAB
                     icon='check'
-                    onPress={()=>{props.navigation.navigate('price_check')}}
+                    onPress={() => { props.navigation.navigate('price_check') }}
                     style={{ position: 'absolute', margin: 16, right: 0, bottom: 0 }}
-                />
+                />}
                 <List.Section>
                     <List.Subheader>My Cart</List.Subheader>
                     <ScrollView>

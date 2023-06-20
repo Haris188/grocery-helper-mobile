@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit"
 import { GlobalStateType } from './index'
 
 export interface ProductStateType {
-    cart: CartType
+    cart: CartType,
+    total: TotalType
 }
 
 export interface ProductType {
@@ -37,6 +38,16 @@ export interface CartType {
     [x: string]: ProductType
 }
 
+export interface TotalValueType {
+    store: StoreType
+    total: number
+    products: (ProductType & {total: number})[]
+}
+
+export interface TotalType{
+    [x: number]: TotalValueType
+}
+
 const sampleCart: CartType = {
     '1': {
         "id": 1,
@@ -49,7 +60,8 @@ const sampleCart: CartType = {
 const productSlice = createSlice({
     name: 'product',
     initialState: {
-        cart: {}
+        cart: {},
+        total: {}
     },
     reducers: {
         setCart(state: ProductStateType, { payload }: { payload: CartType }) {
@@ -60,13 +72,18 @@ const productSlice = createSlice({
             delete tempCart[payload.vector.toString()]
             state.cart = tempCart
         },
+        setTotal(state: ProductStateType, { payload }: { payload: TotalType }) {
+            state.total = payload
+        },
     }
 })
 
 export const {
     setCart,
-    deleteFromCart
+    deleteFromCart,
+    setTotal
 } = productSlice.actions
 
 export const cartSelector = (state: GlobalStateType) => state.product.cart
+export const totalSelector = (state: GlobalStateType) => state.product.total
 export default productSlice

@@ -5,6 +5,7 @@ import { PaperProvider, DefaultTheme } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native'
 import GroceryList from './src/screens/GroceryList';
 import PriceCheck from './src/screens/PriceCheck';
+import PriceCheckDetails from './src/screens/PriceCheckDetails';
 import Cart from './src/screens/Cart';
 import { store } from './src/redux'
 import { Provider } from 'react-redux'
@@ -32,6 +33,11 @@ export default function App() {
             <Stack.Screen
               name='price_check'
               component={PriceCheck}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name='price_check_details'
+              component={PriceCheckDetails}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>

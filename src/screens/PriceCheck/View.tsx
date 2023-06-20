@@ -3,10 +3,12 @@ import { Button, FAB, List, Text, TextInput } from 'react-native-paper'
 import SafeContainer from '../../compenents/SafeContainer'
 import styled from 'styled-components/native'
 import { ScrollView, View } from 'react-native'
-import { CartType, ProductType } from '../../redux/productSlice'
+import { TotalType } from '../../redux/productSlice'
+import { mapValues } from 'lodash'
 
 interface PropTypes {
-   
+   total: TotalType,
+   handleTotalPress: (storeId: number)=>void
 }
 
 const Container = styled.View`
@@ -17,36 +19,23 @@ export default (props: PropTypes) => {
     return (
         <SafeContainer>
             <Container>
-                {/* <FAB 
-                    icon='check'
-                    onPress={()=>{console.log('press')}}
-                    style={{ position: 'absolute', margin: 16, right: 0, bottom: 0 }}
-                />
                 <List.Section>
-                    <List.Subheader>My Cart</List.Subheader>
+                    <List.Subheader>Price Check</List.Subheader>
                     <ScrollView>
                         {
-                            Object.values(props.cart).map(row => (
+                            Object.values(props.total).map(row => (
                                 <List.Item
-                                    key={row.id.toString()}
-                                    title={row.name}
-                                    description={row.brand}
+                                    key={row.store.id}
+                                    title={row.store.name}
+                                    onPress={()=>{props.handleTotalPress(row.store.id)}}
                                     right={() => (
-                                        <FlexView >
-                                            <TextInput
-                                                value={row.unit_factor?.toString() || '1'}
-                                                right={<TextInput.Affix text={row?.unit?.toString() || '.'} />}
-                                                keyboardType='numeric'
-                                                onChangeText={(text) => { props.handleQuantityChange(row.vector.toString(), text) }}
-                                            />
-                                            <Button onPress={() => { props.deleteFromCart(row) }}>Delete</Button>
-                                        </FlexView>
+                                        <Text>${parseFloat(row.total).toFixed(2)}</Text>
                                     )}
                                 />
                             ))
                         }
                     </ScrollView>
-                </List.Section> */}
+                </List.Section>
             </Container>
         </SafeContainer>
     )
