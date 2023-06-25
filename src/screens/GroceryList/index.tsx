@@ -17,8 +17,6 @@ export default () => {
     const dispatch = useDispatch()
     const navigation = useNavigation()
 
-    console.log('cart', cart)
-
     const handleSearchChange = async (text: String) => {
         const result = await serverRequest('POST', '/product_list',{
             searchTerm: text
@@ -36,8 +34,6 @@ export default () => {
     const deleteProductFromCart = (product: ProductType)=>{
         dispatch(deleteFromCart(product))
     }
-
-    console.log(searchList.length)
 
     return <View
         handleSearchChange={handleSearchChange}

@@ -10,7 +10,8 @@ import {
 import { useSelector, useDispatch } from 'react-redux'
 import { serverRequest } from '../../lib/utils'
 import { forEach, mapValues } from 'lodash'
-import { useNavigation } from '@react-navigation/native'
+import { RouteProp, useNavigation } from '@react-navigation/native'
+import { locationsSelector } from '../../redux/generalSlice'
 
 type TotalResponse = TotalType 
 // & {
@@ -19,18 +20,29 @@ type TotalResponse = TotalType
 //     }
 // }
 
-export default ()=>{
+interface PropTypes {
+    route: RouteProp<any, 'price_check'>
+}
+
+export default (props: PropTypes)=>{
     const navigation = useNavigation()
     const cart = useSelector(cartSelector)
     const total = useSelector(totalSelector)
+    const locations = useSelector(locationsSelector)
     const dispatch = useDispatch()
+    const [searchLocation, setSearchLocation] = useState(1)
+
+    useEffect(()=>{
+        if(props.route.params?.locationId && (props.route.params?.locationId !== searchLocation)){
+            setSearchLocation(props.route.params.locationId)
+        }
+    })
 
     useEffect(()=>{
         getTotal()
-    },[])
+    },[searchLocation])
 
     const getTotal = async ()=>{
-        console.log('cart from total', cart)
         const cartProducts: {[key: number]: {factor: number}} = {}
 
         Object.values(cart).forEach(row=>{
@@ -38,21 +50,11 @@ export default ()=>{
         })
 
         const payload = {
-            location: 1,
+            location: searchLocation,
             products: cartProducts
         }
 
         const total:TotalResponse = await serverRequest('POST', '/get_total', payload)
-
-        // console.log(total)
-        // const totalWithProdIdsOnly: TotalType = {}
-
-        // forEach(total, (totalRow)=>{
-        //     totalWithProdIdsOnly[totalRow.store.id as number] = {
-        //         ...totalRow,
-        //         products: totalRow.products.map((i: ProductType) =>i.vector.toString())
-        //     }
-        // })
 
         dispatch(setTotal(total))
     }
@@ -63,10 +65,16 @@ export default ()=>{
         })
     }
 
+    const handleLocationPress = ()=>{
+        navigation.navigate('select_location')
+    }
+
     return (
         <View 
             total={total}
             handleTotalPress={handleTotalPress}
+            searchLocation={locations[searchLocation]}
+            handleLocationPress={handleLocationPress}
         />
     )
 }
