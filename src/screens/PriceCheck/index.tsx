@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { serverRequest } from '../../lib/utils'
 import { forEach, mapValues } from 'lodash'
 import { RouteProp, useNavigation } from '@react-navigation/native'
-import { locationsSelector } from '../../redux/generalSlice'
+import { locationsSelector, userSelector } from '../../redux/generalSlice'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParams } from '../../../App'
 
@@ -25,17 +25,16 @@ export default (props: PropTypes)=>{
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParams>>()
     const cart = useSelector(cartSelector)
     const total = useSelector(totalSelector)
+    const user = useSelector(userSelector)
     const locations = useSelector(locationsSelector)
     const dispatch = useDispatch()
-    const [searchLocation, setSearchLocation] = useState(1)
+    const [searchLocation, setSearchLocation] = useState( user.default_location.id)
 
-    
+    console.log('searchLocation', searchLocation, user.default_location.id)
 
     useEffect(()=>{
-        if(props.route.params?.locationId && (props.route.params?.locationId !== searchLocation)){
-            setSearchLocation(props.route.params.locationId)
-        }
-    })
+        setSearchLocation(props?.route.params?.locationId)
+    }, [props.route.params?.locationId])
 
     useEffect(()=>{
         getTotal()

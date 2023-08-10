@@ -10,9 +10,10 @@ import Cart from './src/screens/Cart';
 import { store } from './src/redux'
 import { Provider, useDispatch } from 'react-redux'
 import { serverRequest } from './src/lib/utils';
-import { setLocations } from './src/redux/generalSlice';
+import { setLocations, setUser } from './src/redux/generalSlice';
 import SelectLocation from './src/screens/SelectLocation';
 import Profile from './src/screens/Profile';
+import MyLocation from './src/screens/MyLocation';
 
 export type RootStackParams = {
   grocery_list: undefined,
@@ -24,7 +25,8 @@ export type RootStackParams = {
     storeId: number
   },
   select_location: undefined,
-  profile: undefined
+  profile: undefined,
+  my_location: undefined
 }
 
 const Stack = createNativeStackNavigator<RootStackParams>() 
@@ -39,7 +41,11 @@ function MainComponent() {
 
   const setupInitialState = async () => {
     const initialParams = await serverRequest('GET', '/initial_params')
+
+    console.log('initialParams', initialParams)
+
     dispatch(setLocations(initialParams.locations))
+    dispatch(setUser(initialParams.user))
   }
   return (
     <NavigationContainer>
@@ -72,6 +78,11 @@ function MainComponent() {
         <Stack.Screen
           name='profile'
           component={Profile}
+          options={{ headerShown: true }}
+        />
+        <Stack.Screen
+          name='my_location'
+          component={MyLocation}
           options={{ headerShown: true }}
         />
       </Stack.Navigator>

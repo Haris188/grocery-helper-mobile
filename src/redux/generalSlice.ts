@@ -3,6 +3,7 @@ import { GlobalStateType } from './index'
 
 export interface GeneralStateType {
     locations: LocationMapType
+    user: UserType
 }
 
 export interface LocationMapType {
@@ -16,21 +17,36 @@ export interface LocationType {
     state: string
 }
 
+export interface UserType {
+    id: number
+    first_name: string
+    last_name: string
+    email: string
+    default_location: LocationType
+    favourite_stores: number[] | null
+}
+
 const generalSlice = createSlice({
     name: 'general',
     initialState: {
-        locations: [] as LocationType[]
+        locations: [] as LocationType[],
+        user: {} as UserType
     },
     reducers: {
         setLocations(state: GeneralStateType, { payload }: { payload: LocationType[] }) {
             state.locations = payload
-        }
+        },
+        setUser(state: GeneralStateType, { payload }: { payload: UserType }) {
+            state.user = payload
+        },
     }
 })
 
 export const {
-    setLocations
+    setLocations,
+    setUser
 } = generalSlice.actions
 
 export const locationsSelector = (state: GlobalStateType) => state.general.locations
+export const userSelector = (state: GlobalStateType) => state.general.user
 export default generalSlice
