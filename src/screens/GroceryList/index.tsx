@@ -9,13 +9,15 @@ import {
  } from '../../redux/productSlice'
 import { serverRequest } from '../../lib/utils'
 import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { RootStackParams } from '../../../App'
 
 export default () => {
     const shouldSearch = useState(true)
     const [searchList, setSearchList] = useState<ProductType[]>([])
     const cart = useSelector(cartSelector)
     const dispatch = useDispatch()
-    const navigation = useNavigation()
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParams>>()
 
     const handleSearchChange = async (text: String) => {
         const result = await serverRequest('POST', '/product_list',{
@@ -35,12 +37,21 @@ export default () => {
         dispatch(deleteFromCart(product))
     }
 
+    const handleCartPress = ()=>{
+        navigation.navigate('cart')
+    }
+
+    const navigate = (screen: keyof RootStackParams)=>{
+        navigation.navigate(screen)
+    }
+
     return <View
         handleSearchChange={handleSearchChange}
         searchList={searchList}
         addToCart={addToCart}
         deleteFromCart={deleteProductFromCart}
         cart={cart}
-        navigation={navigation}
+        handleCartPress={handleCartPress}
+        navigate={navigate}
     />
 }

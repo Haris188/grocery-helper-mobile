@@ -6,10 +6,10 @@ import {
 import { useSelector } from 'react-redux'
 import { RouteProp } from '@react-navigation/native';
 import {Text} from 'react-native-paper'
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParams } from '../../../App';
 
-interface PropTypes {
-    route: RouteProp<any, 'price_check'>
-}
+type PropTypes = NativeStackScreenProps<RootStackParams, 'price_check_details'>
 
 export default (props:PropTypes)=>{
     const total = useSelector(totalSelector)

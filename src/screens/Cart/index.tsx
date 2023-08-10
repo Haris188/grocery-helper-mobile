@@ -3,11 +3,13 @@ import View from './View'
 import {ProductType, cartSelector, deleteFromCart, setCart  } from '../../redux/productSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { RootStackParams } from '../../../App'
 
 export default ()=>{
     const cart = useSelector(cartSelector)
     const dispatch = useDispatch()
-    const navigation = useNavigation()
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParams>>()
 
     const deleteProductFromCart = (product: ProductType)=>{
         dispatch(deleteFromCart(product))
@@ -21,12 +23,18 @@ export default ()=>{
         dispatch(setCart(tempCart))
     }
 
+    const handePriceCheckPress = ()=>{
+        navigation.navigate('price_check', {
+            locationId: 1
+        }) 
+    }
+
     return (
         <View 
             cart={cart}
             deleteFromCart={deleteProductFromCart}
             handleQuantityChange={handleQuantityChange}
-            navigation={navigation}
+            handePriceCheckPress={handePriceCheckPress}
         />
     )
 }

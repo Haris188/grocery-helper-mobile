@@ -12,25 +12,24 @@ import { serverRequest } from '../../lib/utils'
 import { forEach, mapValues } from 'lodash'
 import { RouteProp, useNavigation } from '@react-navigation/native'
 import { locationsSelector } from '../../redux/generalSlice'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { RootStackParams } from '../../../App'
 
 type TotalResponse = TotalType 
-// & {
-//     [x: number]: {
-//         products: ProductType[]
-//     }
-// }
 
 interface PropTypes {
     route: RouteProp<any, 'price_check'>
 }
 
 export default (props: PropTypes)=>{
-    const navigation = useNavigation()
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParams>>()
     const cart = useSelector(cartSelector)
     const total = useSelector(totalSelector)
     const locations = useSelector(locationsSelector)
     const dispatch = useDispatch()
     const [searchLocation, setSearchLocation] = useState(1)
+
+    
 
     useEffect(()=>{
         if(props.route.params?.locationId && (props.route.params?.locationId !== searchLocation)){

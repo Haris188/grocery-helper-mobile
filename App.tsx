@@ -12,9 +12,22 @@ import { Provider, useDispatch } from 'react-redux'
 import { serverRequest } from './src/lib/utils';
 import { setLocations } from './src/redux/generalSlice';
 import SelectLocation from './src/screens/SelectLocation';
+import Profile from './src/screens/Profile';
 
-const Stack = createNativeStackNavigator()
+export type RootStackParams = {
+  grocery_list: undefined,
+  cart: undefined,
+  price_check: {
+    locationId: number
+  },
+  price_check_details: {
+    storeId: number
+  },
+  select_location: undefined,
+  profile: undefined
+}
 
+const Stack = createNativeStackNavigator<RootStackParams>() 
 const theme = DefaultTheme
 
 function MainComponent() {
@@ -55,6 +68,11 @@ function MainComponent() {
           name='select_location'
           component={SelectLocation}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='profile'
+          component={Profile}
+          options={{ headerShown: true }}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -10,7 +10,7 @@ interface PropTypes {
     cart: CartType
     deleteFromCart: (product: ProductType) => void
     handleQuantityChange: (vector: string, unit_factor: string) => void
-    navigation: NavigationProp<ReactNavigation.RootParamList>
+    handePriceCheckPress: ()=>void
 }
 
 const Container = styled.View`
@@ -29,7 +29,7 @@ export default (props: PropTypes) => {
             <Container>
                 {Object.keys(props.cart).length > 0 && <FAB
                     icon='check'
-                    onPress={() => { props.navigation.navigate('price_check') }}
+                    onPress={() => {props.handePriceCheckPress() }}
                     style={{ position: 'absolute', margin: 16, right: 0, bottom: 0 }}
                 />}
                 <List.Section>

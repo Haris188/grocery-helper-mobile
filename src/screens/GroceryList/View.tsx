@@ -1,11 +1,12 @@
 import React from 'react'
-import { TextInput, Button, List, Text } from 'react-native-paper'
+import { TextInput, Button, List, Avatar, TouchableRipple } from 'react-native-paper'
 import styled from 'styled-components/native'
 import SafeContainer from '../../compenents/SafeContainer'
-import { ScrollView } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import { CartType, ProductType } from '../../redux/productSlice'
 import { NavigationProp } from '@react-navigation/native'
 import FabButton from '../../compenents/FabButton'
+import { RootStackParams } from '../../../App'
 
 export interface PropTypes {
     handleSearchChange: (text: String) => void
@@ -13,7 +14,8 @@ export interface PropTypes {
     addToCart: (product: ProductType) => void
     deleteFromCart: (product: ProductType) => void
     cart: CartType
-    navigation: NavigationProp<ReactNavigation.RootParamList>
+    handleCartPress: () => void
+    navigate: (screen: keyof RootStackParams) => void
 }
 
 const Container = styled.View`
@@ -27,15 +29,33 @@ export default (props: PropTypes) => {
                 {Object.keys(props.cart).length > 0 && <FabButton
                     icon='cart'
                     mode='contained'
-                    onPress={() => { props.navigation.navigate('cart') }}
+                    onPress={() => { props.handleCartPress() }}
                 >
                     {Object.keys(props.cart).length}
                 </FabButton>}
 
-                <TextInput
-                    label={'Search'}
-                    onEndEditing={(e) => { props.handleSearchChange(e.nativeEvent.text) }}
-                />
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        alignItems: 'center'
+                    }}
+                >
+                    <TextInput
+                        style={{ flex: 0.8 }}
+                        label={'Search'}
+                        onEndEditing={(e) => { props.handleSearchChange(e.nativeEvent.text) }}
+                    />
+                    <View style={{ flex: 0.2, justifyContent: 'flex-end', flexDirection: 'row' }} >
+                        <TouchableRipple onPress={()=>{props.navigate('profile')}} >
+                            <Avatar.Text
+                                label='H'
+                                size={50}
+                            />
+                        </TouchableRipple>
+                    </View>
+                </View>
+
+
                 <List.Section>
                     <List.Subheader>Items</List.Subheader>
                     <ScrollView>
