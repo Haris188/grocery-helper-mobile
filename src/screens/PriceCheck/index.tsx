@@ -28,13 +28,13 @@ export default (props: PropTypes)=>{
     const user = useSelector(userSelector)
     const locations = useSelector(locationsSelector)
     const dispatch = useDispatch()
-    const [searchLocation, setSearchLocation] = useState( user.default_location.id)
+    const searchLocation = props?.route.params?.locationId
 
     console.log('searchLocation', searchLocation, user.default_location.id)
 
-    useEffect(()=>{
-        setSearchLocation(props?.route.params?.locationId)
-    }, [props.route.params?.locationId])
+    // useEffect(()=>{
+    //     setSearchLocation(props?.route.params?.locationId)
+    // }, [props.route.params?.locationId])
 
     useEffect(()=>{
         getTotal()

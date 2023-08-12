@@ -5,9 +5,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParams } from '../../../App'
+import { userSelector } from '../../redux/generalSlice'
 
 export default ()=>{
     const cart = useSelector(cartSelector)
+    const user = useSelector(userSelector)
     const dispatch = useDispatch()
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParams>>()
 
@@ -25,7 +27,7 @@ export default ()=>{
 
     const handePriceCheckPress = ()=>{
         navigation.navigate('price_check', {
-            locationId: 1
+            locationId: user.default_location.id
         }) 
     }
 
