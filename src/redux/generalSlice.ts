@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { Dispatch, createSlice } from "@reduxjs/toolkit"
 import { GlobalStateType } from './index'
+import { serverRequest } from "../lib/utils"
 
 export interface GeneralStateType {
     locations: LocationMapType
@@ -7,7 +8,7 @@ export interface GeneralStateType {
 }
 
 export interface LocationMapType {
-    [x:number]: LocationType
+    [x: number]: LocationType
 }
 
 export interface LocationType {
@@ -41,6 +42,16 @@ const generalSlice = createSlice({
         },
     }
 })
+
+export const setupInitialState = async (dispatch: Dispatch) => {
+    const initialParams = await serverRequest('GET', '/initial_params')
+
+    console.log('initialParams', initialParams)
+
+    dispatch(setLocations(initialParams.locations))
+    dispatch(setUser(initialParams.user))
+}
+
 
 export const {
     setLocations,

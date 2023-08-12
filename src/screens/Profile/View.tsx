@@ -26,6 +26,11 @@ export default (props: PropTypes) => {
                             description={props.currentLocation}
                             onPress={()=>{props.navigate('my_location')}}
                         />
+                        <List.Item
+                            title='Favourite Stores'
+                            description='Select your favourite stores'
+                            onPress={()=>{props.navigate('favourite_stores')}}
+                        />
                     </ScrollView>
                 </List.Section>
             </Container>

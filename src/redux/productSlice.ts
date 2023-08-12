@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { GlobalStateType } from './index'
+import { LocationType } from "./generalSlice"
 
 export interface ProductStateType {
     cart: CartType,
@@ -20,6 +21,7 @@ export interface StoreType {
     name: String
     postal_code: String
     location_id: Number
+    location: LocationType
 }
 
 export interface MasterType {
