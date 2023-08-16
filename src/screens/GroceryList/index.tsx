@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import View, { PropTypes } from './View'
 import { useSelector, useDispatch } from 'react-redux'
 import { 
@@ -18,6 +18,10 @@ export default () => {
     const cart = useSelector(cartSelector)
     const dispatch = useDispatch()
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParams>>()
+
+    useEffect(()=>{
+        handleSearchChange('')
+    },[])
 
     const handleSearchChange = async (text: String) => {
         const result = await serverRequest('POST', '/product_list',{

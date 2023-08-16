@@ -69,7 +69,12 @@ const productSlice = createSlice({
         setCart(state: ProductStateType, { payload }: { payload: CartType }) {
             state.cart = payload
         },
-        deleteFromCart(state: ProductStateType, { payload }: { payload: ProductType }) {
+        deleteFromCart(state: ProductStateType, { payload }: { payload: ProductType | undefined }) {
+            if(!payload){
+                state.cart = {}
+                return
+            }
+
             const tempCart = { ...state.cart }
             delete tempCart[payload.vector.toString()]
             state.cart = tempCart

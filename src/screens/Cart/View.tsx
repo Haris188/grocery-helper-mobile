@@ -11,6 +11,7 @@ interface PropTypes {
     deleteFromCart: (product: ProductType) => void
     handleQuantityChange: (vector: string, unit_factor: string) => void
     handePriceCheckPress: ()=>void
+    deleteAllFromCart: ()=>void
 }
 
 const Container = styled.View`
@@ -33,7 +34,8 @@ export default (props: PropTypes) => {
                     style={{ position: 'absolute', margin: 16, right: 0, bottom: 0 }}
                 />}
                 <List.Section>
-                    <List.Subheader>My Cart</List.Subheader>
+                    <List.Subheader>My Shopping List</List.Subheader>
+                    <Button mode='outlined' onPress={() => { props.deleteAllFromCart() }} >Delete All</Button>
                     <ScrollView>
                         {
                             Object.values(props.cart).map(row => (

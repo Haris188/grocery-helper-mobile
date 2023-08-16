@@ -17,6 +17,10 @@ export default ()=>{
         dispatch(deleteFromCart(product))
     }
 
+    const deleteAllFromCart = ()=>{
+        dispatch(deleteFromCart())
+    }
+
     const handleQuantityChange = (vector: string, unit_factor: string)=>{
         const unit_factor_int = parseInt(unit_factor || '0')
         const tempCart = {...cart}
@@ -37,6 +41,7 @@ export default ()=>{
             deleteFromCart={deleteProductFromCart}
             handleQuantityChange={handleQuantityChange}
             handePriceCheckPress={handePriceCheckPress}
+            deleteAllFromCart={deleteAllFromCart}
         />
     )
 }

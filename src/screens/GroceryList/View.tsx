@@ -41,7 +41,7 @@ export default (props: PropTypes) => {
                     }}
                 >
                     <TextInput
-                        style={{ flex: 0.8 }}
+                        style={{ flex: 0.85 }}
                         label={'Search'}
                         onEndEditing={(e) => { props.handleSearchChange(e.nativeEvent.text) }}
                     />
