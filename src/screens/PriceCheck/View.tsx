@@ -8,7 +8,8 @@ import { mapValues } from 'lodash'
 import { LocationMapType, LocationType } from '../../redux/generalSlice'
 
 interface PropTypes {
-    total: TotalType,
+    favouriteStoresCheck: TotalType,
+    otherStoresCheck: TotalType,
     handleTotalPress: (storeId: number) => void
     searchLocation: LocationType
     handleLocationPress: ()=>void
@@ -34,7 +35,19 @@ export default (props: PropTypes) => {
                     <List.Subheader>Price Check</List.Subheader>
                     <ScrollView>
                         {
-                            Object.values(props.total).map(row => (
+                            Object.values(props.favouriteStoresCheck).map(row => (
+                                <List.Item
+                                    key={row.store.id}
+                                    title={row.store.name}
+                                    onPress={() => { props.handleTotalPress(row.store.id) }}
+                                    right={() => (
+                                        <Text>${parseFloat(row.total).toFixed(2)}</Text>
+                                    )}
+                                />
+                            ))
+                        }
+                        {
+                            Object.values(props.otherStoresCheck).map(row => (
                                 <List.Item
                                     key={row.store.id}
                                     title={row.store.name}

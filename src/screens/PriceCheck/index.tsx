@@ -67,26 +67,27 @@ export default (props: PropTypes) => {
         navigation.navigate('select_location')
     }
 
-    let orderedTotal:TotalType = {}
-    if (total && Object.keys(total).length > 0) {
+    const otherStoresCheck = JSON.parse(JSON.stringify(total))
+    let favouriteStoresCheck:TotalType = {}
+    if (otherStoresCheck && Object.keys(total).length > 0) {
         if (user.favourite_stores) {
             for (var i of user.favourite_stores) {
-                if(total[i]){
+                if(otherStoresCheck[i]){
                     console.log(i)
-                    orderedTotal[i] = {...total[i]}
-                    delete total[i]
+                    favouriteStoresCheck[i] = {...otherStoresCheck[i]}
+                    delete otherStoresCheck[i]
                 }
             }
         }
 
-        console.log(orderedTotal)
-
-        orderedTotal = {...orderedTotal, ...total}
+        console.log('favouriteStoresCheck',favouriteStoresCheck)
+        console.log('otherStoresCheck',otherStoresCheck)
     }
 
     return (
         <View
-            total={orderedTotal}
+            favouriteStoresCheck={favouriteStoresCheck}
+            otherStoresCheck={otherStoresCheck}
             handleTotalPress={handleTotalPress}
             searchLocation={locations[searchLocation]}
             handleLocationPress={handleLocationPress}
